@@ -1,0 +1,37 @@
+on:
+  push:
+  pull_request:
+jobs:
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@41ae19e72e21b9a1380e86ff9f058db709fc8fc6
+        with:
+          version: 0.10.0-dev.1289+2036af94e
+      - run: zig fmt --check **/*.zig
+
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@41ae19e72e21b9a1380e86ff9f058db709fc8fc6
+        with:
+          version: 0.10.0-dev.1289+2036af94e
+      - run: zig build
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@41ae19e72e21b9a1380e86ff9f058db709fc8fc6
+        with:
+          version: 0.10.0-dev.1289+2036af94e
+      - run: zig build test
