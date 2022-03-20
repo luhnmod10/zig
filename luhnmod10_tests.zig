@@ -1,19 +1,18 @@
 const std = @import("std");
 const expect = std.testing.expect;
-const luhnmod10 = @import("lib.zig");
+
+const luhnmod10 = @import("luhnmod10.zig");
 
 test "benchmark" {
     const count: i64 = 14_000;
-    const number = "4242424242424242";
-
     var timer = try std.time.Timer.start();
     var i: i64 = 0;
     while (i < count) : (i += 1) {
+        const number = "4242424242424242";
         _ = luhnmod10.valid(number);
     }
     const ns = timer.read();
     std.log.warn("count {}", .{i});
-
     const nsOp = @divTrunc(ns, count);
     std.log.warn("{} ns/op", .{nsOp});
 }

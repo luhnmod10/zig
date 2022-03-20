@@ -8,12 +8,12 @@ pub fn build(b: *std.build.Builder) void {
     const fmt_step = b.step("fmt", "Format code");
     fmt_step.dependOn(&fmt.step);
 
-    const lib = b.addStaticLibrary("luhnmod10", "src/lib.zig");
+    const lib = b.addStaticLibrary("luhnmod10", "luhnmod10.zig");
     lib.setBuildMode(mode);
     lib.setTarget(target);
     lib.install();
 
-    const tests = b.addTest("src/tests.zig");
+    const tests = b.addTest("luhnmod10_tests.zig");
     tests.setBuildMode(mode);
     tests.setTarget(target);
     const test_step = b.step("test", "Run tests");
